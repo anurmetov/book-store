@@ -1,17 +1,17 @@
 package mate.academy.service.impl;
 
 import java.util.List;
+import lombok.AllArgsConstructor;
 import mate.academy.entity.Book;
 import mate.academy.repository.BookRepository;
 import mate.academy.service.BookService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class BookServiceImpl implements BookService {
 
-    @Autowired
-    private BookRepository bookRepository;
+    private final BookRepository bookRepository;
 
     @Override
     public Book save(Book book) {
@@ -19,7 +19,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List findAll() {
+    public List<Book> findAll() {
         return bookRepository.findAll();
     }
 }

@@ -9,7 +9,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-@SpringBootApplication(scanBasePackages = "mate.academy")
+@SpringBootApplication
 public class SpringRepoApplication {
 
     @Autowired
@@ -28,6 +28,7 @@ public class SpringRepoApplication {
             bookEntity.setIsbn("!");
             bookEntity.setPrice(BigDecimal.ONE);
             bookService.save(bookEntity);
+            System.out.println(bookService.findAll());
         };
     }
 }
