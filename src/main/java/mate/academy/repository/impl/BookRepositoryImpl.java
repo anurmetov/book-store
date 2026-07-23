@@ -3,6 +3,7 @@ package mate.academy.repository.impl;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import mate.academy.exception.DataProcessingException;
 import mate.academy.model.Book;
 import mate.academy.repository.BookRepository;
 import org.hibernate.Session;
@@ -36,7 +37,7 @@ public class BookRepositoryImpl implements BookRepository {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new RuntimeException("Could not save book", e);
+            throw new DataProcessingException("Could not save book", e);
 
         } finally {
             if (session != null) {
@@ -53,7 +54,7 @@ public class BookRepositoryImpl implements BookRepository {
                     .getResultList();
 
         } catch (Exception e) {
-            throw new RuntimeException("Could not fetch books", e);
+            throw new DataProcessingException("Could not fetch books", e);
         }
     }
 
@@ -65,7 +66,7 @@ public class BookRepositoryImpl implements BookRepository {
             query.setParameter("id", id);
             return Optional.ofNullable(query.getSingleResult());
         } catch (Exception e) {
-            throw new RuntimeException("Could not fetch books", e);
+            throw new DataProcessingException("Could not fetch books", e);
         }
     }
 }
