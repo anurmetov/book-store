@@ -1,4 +1,4 @@
-package mate.academy.entity;
+package mate.academy.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,7 +30,6 @@ public class Book {
 
     @Column(nullable = false)
     private BigDecimal price;
-
     private String description;
     private String coverImage;
 
