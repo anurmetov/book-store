@@ -2,9 +2,3 @@ databaseChangeLog:
   - include:
       file: changes/01-create-books-table.yaml
       relativeToChangelogFile: true
-  - include:
-      file: changes/02-add-isbn-to-books.yaml
-      relativeToChangelogFile: true
-  - include:
-      file: changes/03-add-isdeleted-to-books.yaml
-      relativeToChangelogFile: true
