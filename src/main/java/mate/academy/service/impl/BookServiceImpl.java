@@ -42,7 +42,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void deleteById(Long id) {
-        if (bookRepository.findById(id).isPresent()) {
+        if (bookRepository.existsById(id)) {
             bookRepository.deleteById(id);
         }
     }
@@ -50,13 +50,9 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookDto updateById(Long id, CreateBookRequestDto createBookRequestDto) {
         BookDto existingBook = findBookById(id);
-        existingBook.setTitle(createBookRequestDto.getTitle());
-        existingBook.setAuthor(createBookRequestDto.getAuthor());
-        existingBook.setIsbn(createBookRequestDto.getIsbn());
-        existingBook.setPrice(createBookRequestDto.getPrice());
-        existingBook.setDescription(createBookRequestDto.getDescription());
-        existingBook.setCoverImage(createBookRequestDto.getCoverImage());
+        bookMapper.updateBookFromRequest(createBookRequestDto, existingBook);
         Book updatedBook = bookRepository.save(bookMapper.toModel(existingBook));
+
         return bookMapper.toDto(updatedBook);
     }
 
