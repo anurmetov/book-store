@@ -3,6 +3,7 @@ package mate.academy.service.impl;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import mate.academy.dto.BookDto;
+import mate.academy.dto.BookSearchParametersDto;
 import mate.academy.dto.CreateBookRequestDto;
 import mate.academy.exception.EntityNotFoundException;
 import mate.academy.mapper.BookMapper;
@@ -54,6 +55,15 @@ public class BookServiceImpl implements BookService {
         bookMapper.updateBookFromRequest(createBookRequestDto, book);
 
         return bookMapper.toDto(bookRepository.save(book));
+    }
+
+    @Override
+    public List<BookDto> searchBooks(BookSearchParametersDto searchParameters) {
+        return bookRepository
+                .findAll(searchParameters)
+                .stream()
+                .map(bookMapper::toDto)
+                .toList();
     }
 
 }
