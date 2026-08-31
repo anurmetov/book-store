@@ -9,7 +9,9 @@ import mate.academy.exception.EntityNotFoundException;
 import mate.academy.mapper.BookMapper;
 import mate.academy.model.Book;
 import mate.academy.repository.BookRepository;
+import mate.academy.repository.BookSpecificationBuilder;
 import mate.academy.service.BookService;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,6 +20,7 @@ public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
+    private final BookSpecificationBuilder bookSpecificationBuilder;
 
     @Override
     public BookDto save(CreateBookRequestDto createBookRequestDto) {
@@ -59,11 +62,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookDto> searchBooks(BookSearchParametersDto searchParameters) {
-        return bookRepository
-                .findAll(searchParameters)
-                .stream()
-                .map(bookMapper::toDto)
-                .toList();
+        Specification<BookDto> bookSpecification = bookSpecificationBuilder.build(searchParameters);
+        return bookRepository.findAll(bookSpecification);
     }
-
 }
