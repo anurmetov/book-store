@@ -2,10 +2,8 @@ package mate.academy.exception;
 
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import org.apache.commons.collections4.map.LinkedMap;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -18,10 +16,11 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @RestControllerAdvice
-public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
+public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
-    protected ResponseEntity<Object> handleUniqueValuesError(SQLIntegrityConstraintViolationException ex) {
+    protected ResponseEntity<Object>
+                handleUniqueValuesError(SQLIntegrityConstraintViolationException ex) {
         Map<String, Object> responseBody = new LinkedHashMap<>();
         responseBody.put("timestamp", LocalDateTime.now());
         responseBody.put("status", HttpStatus.BAD_REQUEST);
@@ -31,7 +30,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
-    protected ResponseEntity<Object> handleEntityNotFound(EntityNotFoundException entityNotFoundException) {
+    protected ResponseEntity<Object>
+                handleEntityNotFound(EntityNotFoundException entityNotFoundException) {
 
         Map<String, Object> responseBody = new LinkedHashMap<>();
         responseBody.put("timestamp", LocalDateTime.now());
@@ -41,13 +41,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
         return ResponseEntity.badRequest().body(responseBody);
     }
 
-
     @Nullable
     @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
-                                                                  HttpHeaders headers,
-                                                                  HttpStatusCode status,
-                                                                  WebRequest request) {
+    protected ResponseEntity<Object>
+                handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+                                 HttpHeaders headers,
+                                 HttpStatusCode status,
+                                 WebRequest request) {
         Map<String, Object> responseBody = new LinkedHashMap<>();
         responseBody.put("timestamp", LocalDateTime.now());
         responseBody.put("status", HttpStatus.BAD_REQUEST);
