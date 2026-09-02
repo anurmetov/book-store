@@ -5,6 +5,7 @@ import mate.academy.dto.BookDto;
 import mate.academy.dto.CreateBookRequestDto;
 import mate.academy.model.Book;
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
 
 @Mapper(config = MapperConfig.class)
 public interface BookMapper {
@@ -12,4 +13,7 @@ public interface BookMapper {
     BookDto toDto(Book book);
 
     Book toModel(CreateBookRequestDto bookDto);
+
+    void updateBookFromRequest(CreateBookRequestDto createBookRequestDto,
+                               @MappingTarget Book book);
 }
