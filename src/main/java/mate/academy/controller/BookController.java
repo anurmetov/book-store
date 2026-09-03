@@ -1,8 +1,6 @@
 package mate.academy.controller;
 
 import jakarta.validation.Valid;
-
-import java.util.List;
 import lombok.AllArgsConstructor;
 import mate.academy.dto.BookDto;
 import mate.academy.dto.BookSearchParametersDto;
