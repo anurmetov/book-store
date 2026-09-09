@@ -1,9 +1,10 @@
 package mate.academy.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import mate.academy.dto.UserRequestRegistrationDto;
 import mate.academy.dto.UserResponseDto;
-import mate.academy.exception.RegistrationProcessingException;
+import mate.academy.exception.RegistrationException;
 import mate.academy.service.UserService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,7 +18,8 @@ public class AuthenticationController {
     private final UserService userService;
 
     @PostMapping("/register")
-    public UserResponseDto register(@RequestBody UserRequestRegistrationDto request) throws RegistrationProcessingException {
+    public UserResponseDto register(@RequestBody @Valid UserRequestRegistrationDto request)
+            throws RegistrationException {
         return userService.register(request);
     }
 }
