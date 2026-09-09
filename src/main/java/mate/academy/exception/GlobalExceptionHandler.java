@@ -40,6 +40,17 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.badRequest().body(responseBody);
     }
 
+    @ExceptionHandler(RegistrationException.class)
+    protected ResponseEntity<Object>
+                handleRegistrationException(RegistrationException registrationException) {
+        Map<String, Object> responseBody = new LinkedHashMap<>();
+        responseBody.put("timestamp11", LocalDateTime.now());
+        responseBody.put("status", HttpStatus.NOT_FOUND);
+        responseBody.put("errors", registrationException.getMessage());
+
+        return ResponseEntity.badRequest().body(responseBody);
+    }
+
     @Override
     protected ResponseEntity<Object>
                 handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
@@ -49,9 +60,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         Map<String, Object> responseBody = new LinkedHashMap<>();
         responseBody.put("timestamp", LocalDateTime.now());
         responseBody.put("status", HttpStatus.BAD_REQUEST);
-        responseBody.put("errors", ex.getBindingResult().getFieldErrors()
+        responseBody.put("errors", ex.getBindingResult().getAllErrors()
                 .stream()
-                .map(err -> err.getField() + " " + err.getDefaultMessage())
+                .map(err -> err.getObjectName() + " " + err.getDefaultMessage())
                 .toList());
 
         return ResponseEntity.badRequest().body(responseBody);
