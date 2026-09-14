@@ -1,6 +1,7 @@
 package mate.academy.mapper;
 
 import mate.academy.config.MapperConfig;
+import mate.academy.dto.UserRequestRegistrationDto;
 import mate.academy.dto.UserResponseDto;
 import mate.academy.model.User;
 import org.mapstruct.Mapper;
@@ -9,4 +10,6 @@ import org.mapstruct.Mapper;
 public interface UserMapper {
 
     UserResponseDto toUserResponseDto(User user);
+
+    User toUser(UserRequestRegistrationDto userRequestRegistrationDto);
 }
