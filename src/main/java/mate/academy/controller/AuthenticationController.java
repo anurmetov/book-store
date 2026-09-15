@@ -22,6 +22,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
     private final UserService userService;
 
+    @Tag(
+            name = "User Registration",
+            description = "Endpoint for registration of user in the application"
+    )
     @PostMapping("/registration")
     public UserResponseDto register(@RequestBody @Valid UserRequestRegistrationDto request)
             throws RegistrationException {
