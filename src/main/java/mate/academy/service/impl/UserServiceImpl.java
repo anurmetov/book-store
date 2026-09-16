@@ -1,11 +1,16 @@
 package mate.academy.service.impl;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import mate.academy.dto.UserRequestRegistrationDto;
 import mate.academy.dto.UserResponseDto;
 import mate.academy.exception.RegistrationException;
 import mate.academy.mapper.UserMapper;
+import mate.academy.model.Role;
 import mate.academy.model.User;
+import mate.academy.repository.RoleRepository;
 import mate.academy.repository.UserRepository;
 import mate.academy.service.UserService;
 import org.springframework.stereotype.Service;
@@ -15,6 +20,7 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final RoleRepository roleRepository;
 
     @Override
     public UserResponseDto register(UserRequestRegistrationDto userRequestRegistrationDto) {
@@ -25,6 +31,7 @@ public class UserServiceImpl implements UserService {
             );
         }
         User user = userMapper.toUser(userRequestRegistrationDto);
+        user.setRoles(Set.of(roleRepository.findByRole(Role.RoleName.USER).orElseThrow()));
         return userMapper.toUserResponseDto(userRepository.save(user));
     }
 }

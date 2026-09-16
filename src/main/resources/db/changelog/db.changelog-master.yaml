@@ -5,3 +5,12 @@ databaseChangeLog:
   - include:
       file: changes/02-create-users-table.yaml
       relativeToChangelogFile: true
+  - include:
+      file: changes/03-create-roles-table.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: changes/04-create-users-roles-table.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: changes/05-adding-value-roles-table.yaml
+      relativeToChangelogFile: true
