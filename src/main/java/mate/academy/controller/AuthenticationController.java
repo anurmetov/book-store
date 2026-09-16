@@ -29,8 +29,9 @@ public class AuthenticationController {
             description = "Endpoint for registration of user in the application"
     )
     @PostMapping("/registration")
-    public ResponseEntity<UserResponseDto> register(@RequestBody @Valid UserRequestRegistrationDto request)
-            throws RegistrationException {
+    public ResponseEntity<UserResponseDto>
+            register(@RequestBody @Valid UserRequestRegistrationDto request)
+                throws RegistrationException {
         UserResponseDto responseDto = userService.register(request);
         return ResponseEntity
                 .status(HttpStatus.CREATED)

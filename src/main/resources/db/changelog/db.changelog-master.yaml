@@ -17,3 +17,6 @@ databaseChangeLog:
   - include:
       file: changes/06-adding-first-admin-users-table.yaml
       relativeToChangelogFile: true
+  - include:
+      file: changes/07-update-existing-roles.yaml
+      relativeToChangelogFile: true

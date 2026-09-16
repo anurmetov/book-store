@@ -1,6 +1,5 @@
 package mate.academy.mapper;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import mate.academy.config.MapperConfig;
 import mate.academy.dto.UserRequestRegistrationDto;
 import mate.academy.dto.UserResponseDto;

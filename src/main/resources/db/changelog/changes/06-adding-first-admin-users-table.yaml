@@ -24,7 +24,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: user_id
-                  value: "2"
+                  value: "1"
 
               - column:
                   name: role_id
