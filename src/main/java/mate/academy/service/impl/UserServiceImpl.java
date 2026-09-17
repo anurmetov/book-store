@@ -1,9 +1,11 @@
 package mate.academy.service.impl;
 
+import jakarta.transaction.Transactional;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import mate.academy.dto.UserRequestRegistrationDto;
 import mate.academy.dto.UserResponseDto;
+import mate.academy.exception.EntityNotFoundException;
 import mate.academy.exception.RegistrationException;
 import mate.academy.mapper.UserMapper;
 import mate.academy.model.Role;
@@ -15,8 +17,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
+    private static final Role.RoleName USER_ROLE = Role.RoleName.ROLE_USER;
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final RoleRepository roleRepository;
@@ -32,8 +36,8 @@ public class UserServiceImpl implements UserService {
         }
         User user = userMapper.toUser(userRequestRegistrationDto);
         user.setPassword(passwordEncoder.encode(userRequestRegistrationDto.password()));
-        user.setRoles(Set.of(roleRepository.findByRole(Role.RoleName.ROLE_USER).orElseThrow(
-                () -> new RegistrationException("Cant find a role name for user")
+        user.setRoles(Set.of(roleRepository.findByRole(USER_ROLE).orElseThrow(
+                () -> new EntityNotFoundException("Cant find a role name for user: " + USER_ROLE)
         )));
         return userMapper.toUserResponseDto(userRepository.save(user));
     }

@@ -20,3 +20,6 @@ databaseChangeLog:
   - include:
       file: changes/07-update-existing-roles.yaml
       relativeToChangelogFile: true
+  - include:
+      file: changes/08-adding-soft-delete-users.yaml
+      relativeToChangelogFile: true
