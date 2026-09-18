@@ -19,9 +19,7 @@ import org.springframework.stereotype.Service;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
-    private static final Role.RoleName USER_ROLE = Role.RoleName.ROLE_USER;
-    private final UserRepository userRepository;
+public class UserServiceImpl implements UserService { private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
@@ -36,9 +34,10 @@ public class UserServiceImpl implements UserService {
         }
         User user = userMapper.toUser(userRequestRegistrationDto);
         user.setPassword(passwordEncoder.encode(userRequestRegistrationDto.password()));
-        user.setRoles(Set.of(roleRepository.findByRole(USER_ROLE).orElseThrow(
-                () -> new EntityNotFoundException("Cant find a role name for user: " + USER_ROLE)
-        )));
+        Role userRole = roleRepository.findByRole(Role.RoleName.ROLE_USER).orElseThrow(
+                () -> new EntityNotFoundException("Cant find a role name for user: "
+                        + Role.RoleName.ROLE_USER));
+        user.setRoles(Set.of(userRole));
         return userMapper.toUserResponseDto(userRepository.save(user));
     }
 }

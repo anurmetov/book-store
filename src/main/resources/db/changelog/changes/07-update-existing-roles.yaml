@@ -2,6 +2,7 @@ databaseChangeLog:
   - changeSet:
       id: update-existing-roles
       author: Artem
+
       changes:
         - update:
             tableName: roles
@@ -11,7 +12,6 @@ databaseChangeLog:
                   value: ROLE_USER
             where: role = 'USER'
 
-
         - update:
             tableName: roles
             columns:
@@ -20,3 +20,19 @@ databaseChangeLog:
                   value: ROLE_ADMIN
             where: role = 'ADMIN'
 
+      rollback:
+        - update:
+            tableName: roles
+            columns:
+              - column:
+                  name: role
+                  value: USER
+            where: role = 'ROLE_USER'
+
+        - update:
+            tableName: roles
+            columns:
+              - column:
+                  name: role
+                  value: ADMIN
+            where: role = 'ROLE_ADMIN'
