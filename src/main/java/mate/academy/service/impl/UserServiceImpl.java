@@ -1,8 +1,10 @@
 package mate.academy.service.impl;
 
 import jakarta.transaction.Transactional;
+import java.util.Optional;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
+import mate.academy.dto.UserRequestLoginDto;
 import mate.academy.dto.UserRequestRegistrationDto;
 import mate.academy.dto.UserResponseDto;
 import mate.academy.exception.EntityNotFoundException;
@@ -12,7 +14,9 @@ import mate.academy.model.Role;
 import mate.academy.model.User;
 import mate.academy.repository.RoleRepository;
 import mate.academy.repository.UserRepository;
+import mate.academy.security.TokenUtil;
 import mate.academy.service.UserService;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +29,7 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final TokenUtil tokenUtil;
 
     @Override
     public UserResponseDto register(UserRequestRegistrationDto userRequestRegistrationDto) {
@@ -40,5 +45,19 @@ public class UserServiceImpl implements UserService {
                 () -> new EntityNotFoundException("Cant find a role name for user: " + USER_ROLE)
         )));
         return userMapper.toUserResponseDto(userRepository.save(user));
+    }
+
+    @Override
+    public String login(UserRequestLoginDto request) {
+        Optional<User> user = userRepository.findUserByEmail(request.email());
+        if (user.isEmpty()) {
+            throw new RuntimeException("Can't login");
+        }
+        if (!passwordEncoder.matches(
+                request.password(),
+                user.get().getPassword())) {
+            throw new RuntimeException("Can't login");
+        }
+        return tokenUtil.generateToken(request.email());
     }
 }
