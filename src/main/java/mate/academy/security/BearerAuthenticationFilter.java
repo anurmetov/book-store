@@ -5,27 +5,41 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpFilter;
+import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.stereotype.Component;
 
+@Component
 public class BearerAuthenticationFilter extends HttpFilter {
-
     @Override
     public void doFilter(
             ServletRequest request,
             ServletResponse response,
             FilterChain chain) throws IOException, ServletException {
+
+
+        String token = extractToken((HttpServletRequest) request);
+        UsernamePasswordAuthenticationFilter ua = new UsernamePasswordAuthenticationFilter(
+                AuthenticationManager
+        )
+
+
         chain.doFilter(request,response);
 
-        // generate token String(username)
-            // Util:raw token with secret String and then hash it with toHexString
-        // send this token to client
-            // Util: hashed raw token decode in jwt parts array and check if secret == our secret + validation about token expiration
+        // TODO: Generate token in TokenUtil generateToken(String email) Done
+        // TODO: Send this token to client : DONE
         // receive this token from request header
             // Here extractToken(HttpServletRequest request) and then in doFilter()
             // Here UsernamePasswordAuthenttication = new
             // Here SecurityContextHolder
             // Check valid from Util
-        // validate token and identify client
+        // TODO: validate token and identify client DONE
             // Util:extractUsername(String token)
+    }
+
+    private String extractToken(HttpServletRequest request) {
+        return request.getHeader("Authorization").substring(7);
     }
 }
