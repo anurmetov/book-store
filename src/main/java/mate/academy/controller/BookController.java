@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -50,6 +51,7 @@ public class BookController {
     }
 
     @Operation(summary = "Add a new book", description = "Add a new book to DB")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public BookDto createBook(@RequestBody @Valid CreateBookRequestDto createBookRequestDto) {
@@ -57,6 +59,7 @@ public class BookController {
     }
 
     @Operation(summary = "Delete book by id", description = "Delete book by id from DB")
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public void deleteBookById(@PathVariable Long id) {
         bookService.deleteById(id);
@@ -64,6 +67,7 @@ public class BookController {
 
     @Operation(summary = "Update existing book by id",
             description = "Update existing book by id from DB")
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public BookDto updateBookById(@PathVariable Long id,
                                @RequestBody @Valid CreateBookRequestDto createBookRequestDto) {

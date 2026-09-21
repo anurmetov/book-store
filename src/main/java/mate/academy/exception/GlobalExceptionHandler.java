@@ -44,7 +44,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object>
                 handleRegistrationException(RegistrationException registrationException) {
         Map<String, Object> responseBody = new LinkedHashMap<>();
-        responseBody.put("timestamp11", LocalDateTime.now());
+        responseBody.put("timestamp", LocalDateTime.now());
         responseBody.put("status", HttpStatus.CONFLICT);
         responseBody.put("errors", registrationException.getMessage());
 

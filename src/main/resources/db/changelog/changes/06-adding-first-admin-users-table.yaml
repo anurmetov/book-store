@@ -1,0 +1,31 @@
+databaseChangeLog:
+  - changeSet:
+      id: adding-first-admin-users-table
+      author: Artem
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: email
+                  value: "admin@mate.com"
+              - column:
+                  name: password
+                  value: "$2a$12$Ap4NJ5ohs4vsDTkLMQzeTuacj0sOW8Ul4RFmaPpgpIPimThNu2Wfa"
+              - column:
+                  name: first_name
+                  value: "Admin"
+              - column:
+                  name: last_name
+                  value: "Admin"
+
+        - insert:
+            tableName: users_roles
+            columns:
+              - column:
+                  name: user_id
+                  value: "1"
+
+              - column:
+                  name: role_id
+                  value: "2"

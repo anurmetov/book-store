@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - changeSet:
+      id: adding-value-roles-table
+      author: Artem
+      changes:
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: role
+                  value: USER
+
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: role
+                  value: ADMIN
+
