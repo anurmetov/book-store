@@ -6,13 +6,11 @@ import lombok.RequiredArgsConstructor;
 import mate.academy.dto.UserRequestLoginDto;
 import mate.academy.dto.UserRequestRegistrationDto;
 import mate.academy.dto.UserResponseDto;
+import mate.academy.dto.UserResponseLoginDto;
 import mate.academy.exception.RegistrationException;
 import mate.academy.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,7 +45,9 @@ public class AuthenticationController {
             description = "Endpoint for authentication of user in the application"
     )
     @PostMapping("/login")
-    public String authenticate(@RequestBody @Valid UserRequestLoginDto userRequestLoginDto)
+    public UserResponseLoginDto authenticate(@RequestBody @Valid
+                                                 UserRequestLoginDto
+                                                         userRequestLoginDto)
             throws RegistrationException {
         return userService.login(userRequestLoginDto);
     }
