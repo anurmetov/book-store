@@ -10,8 +10,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import java.math.BigDecimal;
+import jakarta.validation.constraints.NotNull;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -20,43 +21,23 @@ import lombok.ToString;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
+@Entity
 @Getter
 @Setter
-@Entity
-@SQLDelete(sql = "UPDATE books SET is_deleted = true WHERE id=?")
+@SQLDelete(sql = "UPDATE categories SET is_deleted = true WHERE id=?")
 @SQLRestriction("is_deleted=false")
-@Table(name = "books")
-public class Book {
+@Table(name = "categories")
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String title;
-
-    @Column(nullable = false)
-    private String author;
-
-    @Column(nullable = false, unique = true)
-    private String isbn;
-
-    @Column(nullable = false)
-    private BigDecimal price;
+    @NotNull
+    private String name;
 
     private String description;
 
-    private String coverImage;
-
     @Column(nullable = false)
     private boolean isDeleted = false;
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "book_category",
-            joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id"))
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private Set<Category> categories = new HashSet<>();
 
 }
