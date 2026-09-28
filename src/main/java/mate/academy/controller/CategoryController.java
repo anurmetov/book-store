@@ -25,12 +25,10 @@ public class CategoryController {
     private final CategoryService categoryService;
     private final BookService bookService;
 
-
     @GetMapping
     public List<CategoryDto> getAllCategories() {
         return categoryService.getAllCategories();
     }
-
 
     @GetMapping("/{id}/books")
     public List<BookDto> getBookByCategoryId(@PathVariable Long id) {
@@ -39,18 +37,18 @@ public class CategoryController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public CategoryDto createCategory(@RequestBody CreateCategoryRequestDto createCategoryRequestDto) {
+    public CategoryDto createCategory(@RequestBody
+                                          CreateCategoryRequestDto createCategoryRequestDto) {
         return categoryService.save(createCategoryRequestDto);
     }
 
-
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public CategoryDto updateCategory(@RequestBody CreateCategoryRequestDto createCategoryRequestDto,
+    public CategoryDto updateCategory(@RequestBody
+                                          CreateCategoryRequestDto createCategoryRequestDto,
                                    @PathVariable Long id) {
         return categoryService.updateById(id, createCategoryRequestDto);
     }
-
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
