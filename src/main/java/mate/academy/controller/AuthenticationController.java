@@ -3,8 +3,10 @@ package mate.academy.controller;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import mate.academy.dto.UserRequestLoginDto;
 import mate.academy.dto.UserRequestRegistrationDto;
 import mate.academy.dto.UserResponseDto;
+import mate.academy.dto.UserResponseLoginDto;
 import mate.academy.exception.RegistrationException;
 import mate.academy.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -36,5 +38,17 @@ public class AuthenticationController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(responseDto);
+    }
+
+    @Tag(
+            name = "User Login",
+            description = "Endpoint for authentication of user in the application"
+    )
+    @PostMapping("/login")
+    public UserResponseLoginDto authenticate(@RequestBody @Valid
+                                                 UserRequestLoginDto
+                                                         userRequestLoginDto)
+            throws RegistrationException {
+        return userService.login(userRequestLoginDto);
     }
 }
