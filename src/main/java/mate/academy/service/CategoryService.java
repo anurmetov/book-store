@@ -1,13 +1,17 @@
 package mate.academy.service;
 
-
 import java.util.List;
-import mate.academy.dto.BookDto;
-import mate.academy.model.Category;
+import mate.academy.dto.CategoryDto;
+import mate.academy.dto.CreateCategoryRequestDto;
 
 public interface CategoryService {
 
-    List<Category> getAllCategories();
+    List<CategoryDto> getAllCategories();
 
-    List<BookDto> getAllByCategoryId(Long id);
+    CategoryDto save(CreateCategoryRequestDto createCategoryRequestDto);
+
+    CategoryDto updateById(Long id, CreateCategoryRequestDto createCategoryRequestDto);
+
+    void deleteById(Long id);
+
 }
