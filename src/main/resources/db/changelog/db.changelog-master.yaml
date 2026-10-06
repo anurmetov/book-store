@@ -23,3 +23,9 @@ databaseChangeLog:
   - include:
       file: changes/08-adding-soft-delete-users.yaml
       relativeToChangelogFile: true
+  - include:
+      file: changes/09-create-category-table.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: changes/10-remove-redundant-columns-category.yaml
+      relativeToChangelogFile: true
