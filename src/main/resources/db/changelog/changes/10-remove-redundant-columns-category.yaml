@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - changeSet:
+      id: remove-redundant-columns-category
+      author: Artem
+      changes:
+        - dropColumn:
+            tableName: category
+            columnName: categories

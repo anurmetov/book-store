@@ -5,6 +5,9 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
+import java.util.List;
+import java.util.Set;
+
 @Data
 public class CreateBookRequestDto {
     @NotBlank
@@ -19,6 +22,11 @@ public class CreateBookRequestDto {
     @Positive
     @NotNull
     private double price;
+
+    @NotNull
+    private Set<CreateCategoryRequestDto> categories;
+
+    // правильно виставити в маппері, бо мапиться як null
 
     private String description;
     private String coverImage;
