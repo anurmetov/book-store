@@ -11,8 +11,10 @@ import mate.academy.exception.EntityNotFoundException;
 import mate.academy.exception.RegistrationException;
 import mate.academy.mapper.UserMapper;
 import mate.academy.model.Role;
+import mate.academy.model.ShoppingCart;
 import mate.academy.model.User;
 import mate.academy.repository.RoleRepository;
+import mate.academy.repository.ShoppingCartRepository;
 import mate.academy.repository.UserRepository;
 import mate.academy.security.JwtUtil;
 import mate.academy.service.UserService;
@@ -33,6 +35,7 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
     private final AuthenticationManager authenticationManager;
+    private final ShoppingCartRepository shoppingCartRepository;
 
     @Override
     public UserResponseDto register(UserRequestRegistrationDto userRequestRegistrationDto) {
@@ -48,7 +51,9 @@ public class UserServiceImpl implements UserService {
                 () -> new EntityNotFoundException("Cant find a role name for user: "
                         + Role.RoleName.ROLE_USER));
         user.setRoles(Set.of(userRole));
-        return userMapper.toUserResponseDto(userRepository.save(user));
+        User savedUser = userRepository.save(user);
+        shoppingCartRepository.save(ShoppingCart.builder().user(user).build());
+        return userMapper.toUserResponseDto(savedUser);
     }
 
     @Override
