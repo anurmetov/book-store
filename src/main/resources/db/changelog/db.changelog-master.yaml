@@ -36,3 +36,7 @@ databaseChangeLog:
       file: changes/11-changed-several-table-properties.yaml
       relativeToChangelogFile: true
 
+  - include:
+      file: changes/12-create-shopping-cart-tables.yaml
+      relativeToChangelogFile: true
+

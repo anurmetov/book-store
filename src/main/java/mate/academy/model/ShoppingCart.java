@@ -9,6 +9,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import java.util.Set;
 import lombok.Getter;
@@ -18,6 +19,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@Table(name = "shopping_cart")
 public class ShoppingCart {
 
     @Id
@@ -25,6 +27,7 @@ public class ShoppingCart {
     private Long id;
 
     @OneToOne
+    @JoinColumn(name = "user_id")
     @NotNull
     private User user;
 
