@@ -18,7 +18,6 @@ databaseChangeLog:
                   type: bigint
                   constraints:
                     nullable: false
-                    unique: true
                     foreignKeyName: fk_shopping_cart_owner
                     references: users(id)
         - createTable:
@@ -36,7 +35,6 @@ databaseChangeLog:
                   type: bigint
                   constraints:
                     nullable: false
-                    unique: true
                     foreignKeyName: fk_shopping_cart_id
                     references: shopping_cart(id)
               - column:
@@ -44,7 +42,6 @@ databaseChangeLog:
                   type: bigint
                   constraints:
                     nullable: false
-                    unique: true
                     foreignKeyName: fk_cart_item_book_id
                     references: books(id)
               - column:
