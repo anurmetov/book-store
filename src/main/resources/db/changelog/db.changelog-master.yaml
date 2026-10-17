@@ -23,6 +23,16 @@ databaseChangeLog:
   - include:
       file: changes/08-adding-soft-delete-users.yaml
       relativeToChangelogFile: true
+
   - include:
       file: changes/09-create-category-table.yaml
       relativeToChangelogFile: true
+
+  - include:
+      file: changes/10-rename-book-table.yaml
+      relativeToChangelogFile: true
+
+  - include:
+      file: changes/11-changed-several-table-properties.yaml
+      relativeToChangelogFile: true
+

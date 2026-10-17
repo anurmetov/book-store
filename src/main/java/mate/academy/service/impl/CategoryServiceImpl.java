@@ -40,8 +40,7 @@ public class CategoryServiceImpl implements CategoryService {
                 .orElseThrow(() ->
                         new EntityNotFoundException("Category was not found by id: " + id));
 
-        category.setName(createCategoryRequestDto.name());
-        category.setDescription(createCategoryRequestDto.description());
+        categoryMapper.updateCategoryFromRequest(createCategoryRequestDto, category);
 
         return categoryMapper.toDto(categoryRepository.save(category));
     }

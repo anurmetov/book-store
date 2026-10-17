@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - changeSet:
+      id: rename-book-table
+      author: Artem
+      changes:
+        - renameTable:
+            newTableName: book_categories
+            oldTableName: book_category
+        - renameTable:
+            newTableName: categories
+            oldTableName: category
+        - dropColumn:
+            tableName: categories
+            columns:
+              - column:
+                  name: categories
+
+
+
