@@ -1,5 +1,6 @@
 package mate.academy.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -22,13 +23,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/cart")
-@Tag(name = "Cart Management", description = "API for managing carts")
+@Tag(name = "Shopping Cart and Items Management",
+        description = "API for managing shopping carts and their items")
 public class CartController {
 
     private final ShoppingCartService shoppingCartService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "Add book to the shopping cart")
     public ResponseEntity<Void> addBook(@RequestBody
                                             @Valid CreateCartItemRequestDto
                                                     createCartItemRequestDto) {
@@ -36,18 +39,21 @@ public class CartController {
         return ResponseEntity.noContent().build();
     }
 
+    @Operation(summary = "Get shopping cart from the current logged user")
     @GetMapping
     public ShoppingCart getShoppingCart() {
         return shoppingCartService.getShoppingCart();
     }
 
     @PutMapping("/items/{cartItemId}")
+    @Operation(summary = "Update a quantity of the item (book) in the shopping cart")
     public void updateCartItem(@PathVariable Long cartItemId,
                                @RequestBody @Valid UpdateCartItemDto updateCartItemDto) {
         shoppingCartService.updateBookQuantity(cartItemId, updateCartItemDto);
     }
 
     @DeleteMapping("/items/{cartItemId}")
+    @Operation(summary = "Delete the item (book) from the shopping cart")
     public void deleteCartItem(@PathVariable Long cartItemId) {
         shoppingCartService.removeBook(cartItemId);
     }
