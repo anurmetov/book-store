@@ -44,26 +44,23 @@ public class OrderServiceImpl implements OrderService {
         Set<CartItem> userCartItems = userShoppingCart.getCartItems();
         BigDecimal total = new BigDecimal(0);
         for (CartItem c : userCartItems) {
-            total.add(c.getBook().getPrice().multiply(BigDecimal.valueOf(c.getQuantity())));
+            total = total.add(c.getBook().getPrice().multiply(BigDecimal.valueOf(c.getQuantity())));
         }
 
         Set<OrderItem> orderItems = new HashSet<>();
 
 
-
-        Order order = orderRepository
-                .findByShippingAddress(createOrderInfoDto.shippingAddress())
-                .orElseGet(() -> Order
-                                .builder()
-                                .user(currentUser)
-                                .status(Status.PENDING)
-                                .total(total)
-                                .orderDate(LocalDateTime.now())
-                                .shippingAddress(createOrderInfoDto.shippingAddress())
-                                .orderItems(
-                                        orderItems
-                                ).build()
-                );
+        BigDecimal finalTotal = total;
+        Order order = Order
+                .builder()
+                .user(currentUser)
+                .status(Status.PENDING)
+                .total(finalTotal)
+                .orderDate(LocalDateTime.now())
+                .shippingAddress(createOrderInfoDto.shippingAddress())
+                .orderItems(
+                        orderItems
+                ).build();
 
         for (CartItem c : userCartItems) {
             OrderItem orderItem = OrderItem
@@ -76,6 +73,8 @@ public class OrderServiceImpl implements OrderService {
             orderItems.add(orderItem);
 
         }
+
+        System.out.println(currentUser.getId());
 
         order.setOrderItems(orderItems);
         orderRepository.save(order);

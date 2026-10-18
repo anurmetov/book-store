@@ -54,7 +54,7 @@ public class Order {
     @NotNull
     private String shippingAddress;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private Set<OrderItem> orderItems;
 
 }

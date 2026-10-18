@@ -44,3 +44,7 @@ databaseChangeLog:
       file: changes/13-create-order-tables.yaml
       relativeToChangelogFile: true
 
+  - include:
+      file: changes/14-fix-order-tables.yaml
+      relativeToChangelogFile: true
+
