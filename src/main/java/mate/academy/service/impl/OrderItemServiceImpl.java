@@ -5,18 +5,13 @@ import lombok.RequiredArgsConstructor;
 import mate.academy.dto.OrderItemResponseDto;
 import mate.academy.mapper.OrderMapper;
 import mate.academy.model.OrderItem;
-import mate.academy.model.User;
 import mate.academy.repository.OrderItemsRepository;
-import mate.academy.repository.UserRepository;
 import mate.academy.service.OrderItemService;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class OrderItemServiceImpl implements OrderItemService {
-    private final UserRepository userRepository;
     private final OrderItemsRepository orderItemsRepository;
     private final OrderMapper orderMapper;
 

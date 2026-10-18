@@ -1,7 +1,6 @@
 package mate.academy.dto;
 
 import java.util.List;
-import mate.academy.model.OrderItem;
 
 public record OrderResponseDto(
         Long id,
