@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - changeSet:
+      id: fix-order-tables
+      author: Artem
+      changes:
+        - dropColumn:
+            tableName: order_items
+            columnName: user_id
