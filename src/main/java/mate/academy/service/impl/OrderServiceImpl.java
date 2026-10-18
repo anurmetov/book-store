@@ -1,13 +1,17 @@
 package mate.academy.service.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import mate.academy.dto.CreateOrderInfoDto;
+import mate.academy.dto.OrderResponseDto;
+import mate.academy.mapper.OrderMapper;
 import mate.academy.model.CartItem;
 import mate.academy.model.Order;
 import mate.academy.model.OrderItem;
@@ -20,6 +24,7 @@ import mate.academy.repository.OrderRepository;
 import mate.academy.repository.ShoppingCartRepository;
 import mate.academy.repository.UserRepository;
 import mate.academy.service.OrderService;
+import org.jspecify.annotations.NonNull;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -33,6 +38,8 @@ public class OrderServiceImpl implements OrderService {
     private final UserRepository userRepository;
     private final ShoppingCartRepository shoppingCartRepository;
     private final OrderItemsRepository orderItemsRepository;
+    private final OrderMapper orderMapper;
+    private final ObjectMapper objectMapper;
 
     @Override
     public void createOrder(CreateOrderInfoDto createOrderInfoDto) {
@@ -82,7 +89,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> getOrderHistory() {
-        return List.of();
+    public List<OrderResponseDto> getOrderHistory() {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        User currentUser = userRepository.findUserByEmail(auth.getName()).orElseThrow();
+        List<Order> allByUserId = orderRepository.findAllByUser_Id(currentUser.getId());
+
+        return allByUserId.stream().map(orderMapper::toResponseDto).toList();
     }
+
 }

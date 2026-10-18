@@ -9,6 +9,8 @@ import mate.academy.dto.BookDtoWithoutCategoryIds;
 import mate.academy.dto.CategoryDto;
 import mate.academy.dto.CreateCategoryRequestDto;
 import mate.academy.dto.CreateOrderInfoDto;
+import mate.academy.dto.OrderResponseDto;
+import mate.academy.model.Order;
 import mate.academy.service.BookService;
 import mate.academy.service.CategoryService;
 import mate.academy.service.OrderItemService;
@@ -38,6 +40,12 @@ public class OrderController {
     @Operation(summary = "Get all categories", description = "Get all categories from DB")
     public void createOrder(@RequestBody @Valid CreateOrderInfoDto createOrderInfoDto) {
         orderService.createOrder(createOrderInfoDto);
+    }
+
+    @GetMapping
+    @Operation(summary = "Get all categories", description = "Get all categories from DB")
+    public List<OrderResponseDto> getOrderHistory() {
+        return orderService.getOrderHistory();
     }
 
 }
