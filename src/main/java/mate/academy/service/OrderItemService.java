@@ -1,12 +1,14 @@
 package mate.academy.service;
 
 import java.util.List;
+import mate.academy.dto.OrderItemResponseDto;
+import mate.academy.dto.OrderResponseDto;
 import mate.academy.model.Order;
 import mate.academy.model.OrderItem;
 
 public interface OrderItemService {
 
-    List<OrderItem> getOrderItems(Long orderId);
+    List<OrderItemResponseDto> getOrderItems(Long orderId);
 
-    OrderItem getSpecificOrderItemFromOrder(Long orderId, Long orderItemId);
+    OrderItemResponseDto getSpecificOrderItemFromOrder(Long orderId, Long orderItemId);
 }

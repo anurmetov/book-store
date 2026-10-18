@@ -9,8 +9,10 @@ import mate.academy.dto.BookDtoWithoutCategoryIds;
 import mate.academy.dto.CategoryDto;
 import mate.academy.dto.CreateCategoryRequestDto;
 import mate.academy.dto.CreateOrderInfoDto;
+import mate.academy.dto.OrderItemResponseDto;
 import mate.academy.dto.OrderResponseDto;
 import mate.academy.model.Order;
+import mate.academy.model.OrderItem;
 import mate.academy.service.BookService;
 import mate.academy.service.CategoryService;
 import mate.academy.service.OrderItemService;
@@ -35,6 +37,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class OrderController {
 
     private final OrderService orderService;
+    private final OrderItemService orderItemService;
 
     @PostMapping
     @Operation(summary = "Get all categories", description = "Get all categories from DB")
@@ -46,6 +49,20 @@ public class OrderController {
     @Operation(summary = "Get all categories", description = "Get all categories from DB")
     public List<OrderResponseDto> getOrderHistory() {
         return orderService.getOrderHistory();
+    }
+
+
+    @GetMapping("/{orderId}/items")
+    @Operation(summary = "Get all categories", description = "Get all categories from DB")
+    public List<OrderItemResponseDto> getOrderItem(@PathVariable Long orderId) {
+        return orderItemService.getOrderItems(orderId);
+    }
+
+
+    @GetMapping("/{orderId}/items/{itemId}")
+    @Operation(summary = "Get all categories", description = "Get all categories from DB")
+    public OrderItemResponseDto getOrderItem(@PathVariable Long orderId, @PathVariable Long itemId) {
+        return orderItemService.getSpecificOrderItemFromOrder(orderId, itemId);
     }
 
 }
