@@ -40,3 +40,7 @@ databaseChangeLog:
       file: changes/12-create-shopping-cart-tables.yaml
       relativeToChangelogFile: true
 
+  - include:
+      file: changes/13-create-order-tables.yaml
+      relativeToChangelogFile: true
+
