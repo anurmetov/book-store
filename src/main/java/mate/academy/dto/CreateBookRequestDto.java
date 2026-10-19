@@ -1,11 +1,11 @@
 package mate.academy.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import java.util.Set;
+import java.util.List;
 import lombok.Data;
-import mate.academy.model.Category;
 
 @Data
 public class CreateBookRequestDto {
@@ -22,8 +22,8 @@ public class CreateBookRequestDto {
     @NotNull
     private double price;
 
-    @NotNull
-    private Set<Category> categories;
+    @NotEmpty
+    private List<Long> categories;
 
     private String description;
     private String coverImage;

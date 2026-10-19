@@ -1,8 +1,8 @@
 package mate.academy.service.impl;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import mate.academy.dto.BookDto;
 import mate.academy.dto.BookDtoWithoutCategoryIds;
@@ -34,9 +34,9 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto save(CreateBookRequestDto createBookRequestDto) {
-        categoryRepository.saveAll(createBookRequestDto.getCategories());
-
         Book book = bookMapper.toModel(createBookRequestDto);
+
+        book.setCategories(categoriesIdToCategories(createBookRequestDto.getCategories()));
 
         return bookMapper.toDto(bookRepository.save(book));
     }
@@ -68,26 +68,7 @@ public class BookServiceImpl implements BookService {
                         "Book was not found by id: " + id));
 
         bookMapper.updateBookFromRequest(requestDto, book);
-
-        Set<Category> categories = new HashSet<>();
-
-        for (Category requestCategory : requestDto.getCategories()) {
-            Category category = categoryRepository
-                    .findByName(requestCategory.getName())
-                    .orElseGet(() -> {
-                        Category newCategory = new Category();
-                        newCategory.setName(requestCategory.getName());
-                        return newCategory;
-                    });
-
-            category.setDescription(requestCategory.getDescription());
-
-            categories.add(categoryRepository.save(category));
-        }
-
-        book.getCategories().clear();
-        book.getCategories().addAll(categories);
-
+        book.setCategories(categoriesIdToCategories(requestDto.getCategories()));
         return bookMapper.toDto(book);
     }
 
@@ -104,5 +85,11 @@ public class BookServiceImpl implements BookService {
                 .stream()
                 .map(bookMapper::toDtoWithoutCategories)
                 .toList();
+    }
+
+    private Set<Category> categoriesIdToCategories(List<Long> categories) {
+        return categories.stream()
+                .map(categoryRepository::getReferenceById)
+                .collect(Collectors.toSet());
     }
 }

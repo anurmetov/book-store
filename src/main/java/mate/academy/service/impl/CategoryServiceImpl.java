@@ -1,5 +1,6 @@
 package mate.academy.service.impl;
 
+import jakarta.transaction.Transactional;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import mate.academy.dto.CategoryDto;
@@ -12,6 +13,7 @@ import mate.academy.service.CategoryService;
 import org.springframework.stereotype.Service;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
