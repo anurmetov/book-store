@@ -1,8 +1,10 @@
 package mate.academy.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import java.util.List;
 import lombok.Data;
 
 @Data
@@ -19,6 +21,9 @@ public class CreateBookRequestDto {
     @Positive
     @NotNull
     private double price;
+
+    @NotEmpty
+    private List<Long> categories;
 
     private String description;
     private String coverImage;

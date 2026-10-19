@@ -2,6 +2,7 @@ package mate.academy.mapper;
 
 import mate.academy.config.MapperConfig;
 import mate.academy.dto.BookDto;
+import mate.academy.dto.BookDtoWithoutCategoryIds;
 import mate.academy.dto.CreateBookRequestDto;
 import mate.academy.model.Book;
 import org.mapstruct.Mapper;
@@ -15,10 +16,14 @@ public interface BookMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "deleted", ignore = true)
+    @Mapping(target = "categories", ignore = true)
     Book toModel(CreateBookRequestDto bookDto);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "deleted", ignore = true)
+    @Mapping(target = "categories", ignore = true)
     void updateBookFromRequest(CreateBookRequestDto createBookRequestDto,
                                @MappingTarget Book book);
+
+    BookDtoWithoutCategoryIds toDtoWithoutCategories(Book book);
 }
